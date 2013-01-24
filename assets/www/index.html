@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <title>Hunter Tracker</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="stylesheet" href="jqmobile/jquery.mobile-1.2.0.min.css" />
+        <style>
+            #mapCanvas {
+                margin:0 auto;
+                padding-top:0;
+                padding-bottom:0;
+                height:auto;
+                width:100%;
+                height:90%;
+                max-height:1600px;
+                overflow:hidden;
+                display:block;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Start of first page -->
+        <div data-role="page" id="homepage" data-title="Home" data-theme="a">
+
+            <div data-role="header">
+                <h1>HOME</h1>
+                <a href="#settings" data-rel="dialog" data-icon="gear" data-iconpos="notext" data-direction="reverse" data-transition="slide">Settings</a>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+                Page information here
+                <div id="app-status-div">
+		<ul id="app-status-ul">
+			<li>Cordova Google Cloud Messaging Plugin Demo</li>
+		</ul>
+	</div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" class="Torch">Torch</a></li>
+                        <li><a href="#" class="Barcode">Barcode</a></li>
+                        <li><a href="#facebook">Facebook</a></li>
+                        <li><a href="#map">Map</a></li>
+                        <li><a href="#" onclick="navigator.app.exitApp();">Quit</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+
+        <!-- Start of settings page -->
+        <div data-role="page" id="settings" data-title="Settings" data-theme="a">
+
+            <div data-role="header">
+                <h1>Settings</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+                settings forms will be here
+            </div><!-- /content -->
+
+        </div><!-- /page -->
+
+        <!-- Start of facebook page -->
+        <div data-role="page" id="facebook" data-title="Facebook" data-theme="a">
+
+            <div data-role="header">
+                <a href="#homepage" data-icon="home" data-iconpos="notext" data-direction="reverse" data-transition="slide">Home</a>
+                <h1>Facebook Demo</h1>
+                <a href="#settings" data-rel="dialog" data-icon="gear" data-iconpos="notext" data-direction="reverse" data-transition="slide">Settings</a>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+                <a href="#" data-rel="dialog" data-transition="slide" data-role="button" onclick="facebook_plugin.login();">Facebook Login</a>
+                <a href="#" data-rel="dialog" data-transition="slide" data-role="button" onclick="facebook_plugin.requestWithGraphPath();">Your Data</a>
+                <a href="#" data-rel="dialog" data-transition="slide" data-role="button" onclick="facebook_plugin.dialog();">Dialog</a>
+                <a href="#" data-rel="dialog" data-transition="slide" data-role="button" onclick="facebook_plugin.logout();">Facebook Logout</a>
+
+            </div><!-- /content -->
+
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" class="Torch">Torch</a></li>
+                        <li><a href="#" class="Barcode">Barcode</a></li>
+                        <li><a href="#facebook">Facebook</a></li>
+                        <li><a href="#map">Map</a></li>
+                        <li><a href="#" onclick="navigator.app.exitApp();">Quit</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+
+
+            <div data-role="popup" id="facebookDialog" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                <div data-role="header" data-theme="a" class="ui-corner-top">
+                    <h1>Delete Page?</h1>
+                </div>
+                <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+
+                    <p id="fbgraphdata">Loading . . .</p>
+                    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>    
+                    <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Delete</a>  
+                </div>
+            </div>
+        </div><!-- /page -->
+
+
+        <!-- Start of first page -->
+        <div data-role="page" id="map" data-title="map" data-theme="a">
+
+            <div data-role="header">
+                <a href="#homepage" data-icon="home" data-iconpos="notext" data-direction="reverse" data-transition="slide">Home</a>
+                <h1>MAP</h1>
+                <a href="#settings" data-rel="dialog" data-icon="gear" data-iconpos="notext" data-direction="reverse" data-transition="slide">Settings</a>
+
+            </div><!-- /header -->
+
+            <div data-role="content" style="width:100%;height:100%;position:absolute;padding:0">	
+                <div id="mapCanvas"></div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" class="Torch">Torch</a></li>
+                        <li><a href="#" class="Barcode">Barcode</a></li>
+                        <li><a href="#facebook">Facebook</a></li>
+                        <li><a href="#map">Map</a></li>
+                        <li><a href="#" onclick="navigator.app.exitApp();">Quit</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+
+
+
+
+
+        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+
+        <script type="text/javascript" src="jqmobile/jquery-1.9.0.min.js"></script>
+        <script type="text/javascript" src="jqmobile/jquery.mobile-1.2.0.js"></script>
+        <script type="text/javascript" src="jqmobile/jquery.ui.map.full.min.js"></script>
+
+
+
+        <!-- cordova plugins -->
+        <script type="text/javascript" src="cordova-android/cordova-2.3.0.js"></script>
+        <script type="text/javascript" src="cordova-android/functions.js"></script>
+        <script type="text/javascript" src="cordova-android/Torch.js"></script>
+        <script type="text/javascript" src="cordova-android/barcodescanner.js"></script>
+        <script type="text/javascript" src="cordova-android/intentscanner.js"></script>
+        <script type="text/javascript" src="cordova-android/FacebookConnect.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova-android/GCMPlugin.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova-android/CORDOVA_GCM_script.js"></script>
+        
+
+        <script type="text/javascript" src="jqmobile/app.js"></script>
+    </body>
+</html>
