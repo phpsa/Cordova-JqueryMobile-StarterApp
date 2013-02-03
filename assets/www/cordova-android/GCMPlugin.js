@@ -1,3 +1,4 @@
+
 (function () {
 
 	var GCM = function() {};
@@ -48,11 +49,13 @@
 	 * register plugin with Phonegap \ Cordova
 	 */
 	if (cordova.addPlugin) {
+            console.log("NBNB added cordova plugin");
 	  cordova.addConstructor(function() {
 	    //Register the javascript plugin with Cordova
 	    cordova.addPlugin('GCM', new GCM());
 	  });
 	} else {
+            console.log("NBNB added window plugin");
 		if (!window.plugins) {
 			window.plugins = {};
 		}

@@ -24,6 +24,56 @@
     <body>
 
         <!-- Start of first page -->
+        <div data-role="page" id="map" data-title="map" data-theme="a">
+
+            <div data-role="header">
+                <h1>MAP</h1>
+                <a href="#settings" data-rel="dialog" data-icon="gear" data-iconpos="notext" data-direction="reverse" data-transition="slide">Settings</a>
+            </div><!-- /header -->
+
+            <div data-role="content" style="width:100%;height:100%;position:absolute;padding:0">	
+                <div id="mapCanvas"></div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" class="Torch">Torch</a></li>
+                        <li><a href="#CompassPage" data-transition="slide">Compass</a></li>
+                        <li><a href="#facebook" data-transition="slide">Facebook</a></li>
+                        <li><a href="#map" class="active">Map</a></li>
+                        <li><a href="#" onclick="navigator.app.exitApp();">Quit</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+        <!-- Start of first page -->
+        <div data-role="page" id="CompassPage" data-title="Compass" data-theme="a">
+
+            <div data-role="header">
+                <h1 id="compassHeader">Compass</h1>
+                <a href="#settings" data-rel="dialog" data-icon="gear" data-iconpos="notext" data-direction="reverse" data-transition="slide">Settings</a>
+            </div><!-- /header -->
+
+            <div data-role="content" style="padding: 10px 0;">
+                <img id="compass" class="Center" src="compass320.png" />
+            </div><!-- /content -->
+
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" class="Torch">Torch</a></li>
+                        <li><a href="#" class="Compass" data-transition="slide">Compass</a></li>
+                        <li><a href="#facebook" data-transition="slide">Facebook</a></li>
+                        <li><a href="#map" class="active">Map</a></li>
+                        <li><a href="#" onclick="navigator.app.exitApp();">Quit</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+        <!-- Start of first page -->
         <div data-role="page" id="homepage" data-title="Home" data-theme="a">
 
             <div data-role="header">
@@ -34,10 +84,10 @@
             <div data-role="content">	
                 Page information here
                 <div id="app-status-div">
-		<ul id="app-status-ul">
-			<li>Cordova Google Cloud Messaging Plugin Demo</li>
-		</ul>
-	</div>
+                    <ul id="app-status-ul">
+                        <li>Cordova Google Cloud Messaging Plugin Demo</li>
+                    </ul>
+                </div>
             </div><!-- /content -->
 
             <div data-role="footer" data-position="fixed">
@@ -112,34 +162,18 @@
         </div><!-- /page -->
 
 
-        <!-- Start of first page -->
-        <div data-role="page" id="map" data-title="map" data-theme="a">
-
-            <div data-role="header">
-                <a href="#homepage" data-icon="home" data-iconpos="notext" data-direction="reverse" data-transition="slide">Home</a>
-                <h1>MAP</h1>
-                <a href="#settings" data-rel="dialog" data-icon="gear" data-iconpos="notext" data-direction="reverse" data-transition="slide">Settings</a>
-
-            </div><!-- /header -->
-
-            <div data-role="content" style="width:100%;height:100%;position:absolute;padding:0">	
-                <div id="mapCanvas"></div>
-            </div><!-- /content -->
-
-            <div data-role="footer" data-position="fixed">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#" class="Torch">Torch</a></li>
-                        <li><a href="#" class="Barcode">Barcode</a></li>
-                        <li><a href="#facebook">Facebook</a></li>
-                        <li><a href="#map">Map</a></li>
-                        <li><a href="#" onclick="navigator.app.exitApp();">Quit</a></li>
-                    </ul>
-                </div><!-- /navbar -->
-            </div><!-- /footer -->
-        </div><!-- /page -->
 
 
+
+        <script>
+            var $GLOBALS = {
+                'Facebook_App_id' : '317511395000921',
+                'Facebook_App_permissions' : ["email", "user_about_me"],
+                'GCM_KEY' : '820407658160',
+                'deviceID' : device.uuid
+            };
+   
+        </script>
 
 
 
@@ -158,12 +192,12 @@
         <script type="text/javascript" src="cordova-android/functions.js"></script>
         <script type="text/javascript" src="cordova-android/Torch.js"></script>
         <script type="text/javascript" src="cordova-android/barcodescanner.js"></script>
-        <script type="text/javascript" src="cordova-android/intentscanner.js"></script>
         <script type="text/javascript" src="cordova-android/FacebookConnect.js"></script>
-        <script type="text/javascript" charset="utf-8" src="cordova-android/GCMPlugin.js"></script>
-        <script type="text/javascript" charset="utf-8" src="cordova-android/CORDOVA_GCM_script.js"></script>
-        
+        <script type="text/javascript" src="cordova-android/GCMPlugin.js"></script>
+
+
 
         <script type="text/javascript" src="jqmobile/app.js"></script>
+        <script type="text/javascript" src="cordova-android/CORDOVA_GCM_script.js"></script>
     </body>
 </html>

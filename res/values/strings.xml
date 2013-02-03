@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hunter Tracker</string>
+    <string name="app_name">Hunter Protector</string>
     <string name="share_name">Barcode Scanner</string>
     <string name="torch">Torch</string>
     <string name="settings">Settings</string>
