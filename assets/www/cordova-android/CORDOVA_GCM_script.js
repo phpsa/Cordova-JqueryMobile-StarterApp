@@ -2,7 +2,23 @@ gApp = new Array();
 
 gApp.deviceready = false;
 gApp.gcmregid = '';
-gApp.deviceId = false;
+
+gApp.pushProfile = {};
+
+var getDeviceData = function() {
+    var data = {
+        Platform: device.platform,
+        Version: device.version,
+        Uuid: device.uuid,
+        Name: device.name,
+        Screen: {
+            Width: screen.width,
+            Height: screen.height,
+            Color: screen.colorDepth
+        }    
+    };
+    return data;
+};
 
 window.onbeforeunload  =  function(e) {
 
@@ -14,8 +30,10 @@ window.onbeforeunload  =  function(e) {
     }
 };
 
-
 document.addEventListener('deviceready', function() {
+    
+    console.log("GCM DEVICEREADY CALLED");
+    
     // This is the Cordova deviceready event. Once this is called Cordova is available to be used
     $("#app-status-ul").append('<li>deviceready event received</li>' );
 
@@ -23,8 +41,7 @@ document.addEventListener('deviceready', function() {
 
 
     gApp.DeviceReady = true;
-    
-    gApp.deviceId = device.uuid;
+
 
     // Some Unique stuff here,
     // The first Parm is your Google email address that you were authorized to use GCM with
@@ -61,6 +78,37 @@ GCM_Event(e)
             {
                 $("#app-status-ul").append('<li>REGISTERED -> REGID:' + e.regid + "</li>");
 
+
+                //Ok we managed to get regstered!!!! :-)
+                var apiUrl = 'http://localhost/gcm/';
+                var postData = {
+                    visible : true,
+                    allow_push : true,
+                    device_data : getDeviceData(),
+                    gcm_regid: e.regid,
+                    name : 'anonymous'
+                };
+                
+                $.ajax({
+                    type: "POST",
+                    url: apiUrl,
+                    data: postData,
+                    dataType: 'json'
+                }).done(function (data,textStatus,jqXHR) {
+                    console.log("api call success");
+                    console.log(JSON.stringify(data));
+                    console.log(JSON.stringify(textStatus));
+                }).fail(function(jqXHR,textStatus,errorThrown) {
+                    console.log("api call FAIL");
+                    console.log(JSON.stringify(jqXHR));
+                    console.log(JSON.stringify(textStatus));
+                    console.log(JSON.stringify(errorThrown));
+                }).always(function(data,textStatus,jqXHR){
+                    console.log("API ALways Called");
+                //here we sould build our current object!
+                });
+               
+            //gApp.pushProfile
 
             // ==============================================================================
             // ==============================================================================

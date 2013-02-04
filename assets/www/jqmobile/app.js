@@ -1,10 +1,13 @@
+var eCount = 0;
 //jQuery Mobile inititalisation
 $( document ).bind( "mobileinit", function() {
     // Make your jQuery Mobile framework configuration changes here!
     $.mobile.allowCrossDomainPages = true;           
 });
 
+
 var theCompass = theCompass || {};
+
 theCompass.Compass = (function () {
     var lastHeading = -1,
     
@@ -37,7 +40,7 @@ var showMapPage = function() {
     $.mobile.changePage( $('#map'), {
         transition: "slide"
     } );
-    //check if we want to reload the map.!!!
+//check if we want to reload the map.!!!
 }
 
 var showPreferences = function () {
@@ -60,8 +63,14 @@ var toggleTorch = function () {
             console.log(e);
         });   
 }
-            
+
+
+
 var quitApp = function () {
+    clearTimeout(PowerRunningEvent);
+    clearTimeout(watchID);
+    window.plugins.Torch.turnOff(function(){},function(){});
+    power_release();
     navigator.app.exitApp();
 }
 
@@ -99,6 +108,8 @@ function power_dim() {
         );
 }
 
+var PowerRunningEvent;
+
 var testPowerManagerSetting = function(){
     console.log("testing Powermanager Settings");
     window.plugins.applicationPreference.load(function(prefs) {
@@ -115,28 +126,23 @@ var testPowerManagerSetting = function(){
         }
     },function(err){
         console.log(err);
-        });
+    });
         
-        setTimeout(testPowerManagerSetting,5000); //every 5 seconds
+    PowerRunningEvent = setTimeout(testPowerManagerSetting,5000); //every 5 seconds
 }
 
 //Device Ready Calls
 document.addEventListener("deviceready", function () {
-    console.warn("DeviceReady");
+
+    console.log(++eCount + ": DeviceReady");
     
-    /*window.plugins.applicationPreference.get("disable_screenout", function(value) {
-       // alert("Value is " + value);
-       if(value == "true"){
-           alert("true is true");
-       }
-       if(value == true){
-           alert("true is boolean");
-       }
-       $GLOBALS.DISABLE_SCREENOUT = value;
-    }, function(error) {
-      //  alert("Error! " + JSON.stringify(error));
-    });*/
-    
+    console.log(++eCount + ": bind back button");
+    document.addEventListener("backbutton", function () {
+        navigator.app.backHistory();
+        return false;
+    }, false);
+            
+        
     testPowerManagerSetting();
     
     initMap();
@@ -174,7 +180,7 @@ document.addEventListener("deviceready", function () {
     });
     
     //set your code to only fire once the deviceready has been triggered here !
-    theCompass.Compass.watchId = navigator.compass.watchHeading(function (heading) {
+    navigator.compass.watchHeading(function (heading) {
         // only magnetic heading works universally on iOS and Android
         // round off the heading then trigger newHeading event for any listeners
         var newHeading = Math.round(heading.magneticHeading);
@@ -187,11 +193,6 @@ document.addEventListener("deviceready", function () {
     });
     
     
-    window.plugins.applicationPreference.get("screenout_interval", function(v) { 
-        $('#"preferenceTimeoutValue').val(v);
-    }, function () {
-        $('#"preferenceTimeoutValue').val('ooops');
-    });
 
 }, false);
 
@@ -250,7 +251,7 @@ function initMap(){
 }
 
 function watchMap(){
-    console.log("MAP:: WatchMap")
+    console.log("MAP:: WatchMap");
     var watchID = navigator.geolocation.watchPosition(function(position) { 
         MoveMarker(position.coords.latitude,position.coords.longitude);
     }, function (e) {
