@@ -5,56 +5,56 @@
  */
 
    
-        /**
+/**
  *  
  * @return Object literal singleton instance of Torch
  */
-        var Torch = function() {};
+var Torch = function() {};
 
-        /**
+/**
   * @param success The callback for success
   * @param error The callback for error
   */
-        Torch.prototype.isCapable = function( success, error ) 
-        {
-            return cordova.exec( success, error, "Torch", "isCapable", [] );   
-        };
+Torch.prototype.isCapable = function( success, error ) 
+{
+    return cordova.exec( success, error, "Torch", "isCapable", [] );   
+};
 
-        /**
+/**
  * @param success The callback for success
  * @param error The callback for error
  */
-        Torch.prototype.isOn = function( success, error ) 
-        {
-            return cordova.exec( success, error, "Torch", "isOn", [] );   
-        };
+Torch.prototype.isOn = function( success, error ) 
+{
+    return cordova.exec( success, error, "Torch", "isOn", [] );   
+};
 
-        /**
+/**
  * @param success The callback for success
  * @param error The callback for error
  */
-        Torch.prototype.turnOn = function( success, error ) 
-        {
-            return cordova.exec( success, error, "Torch", "turnOn", [] );   
-        };
+Torch.prototype.turnOn = function( success, error ) 
+{
+    return cordova.exec( success, error, "Torch", "turnOn", [] );   
+};
 
-        /**
+/**
  * @param success The callback for success
  * @param error The callback for error
  */
-        Torch.prototype.turnOff = function( success, error ) 
-        {
-            return cordova.exec( success, error, "Torch", "turnOff", [] );   
-        };
+Torch.prototype.turnOff = function( success, error ) 
+{
+    return cordova.exec( success, error, "Torch", "turnOff", [] );   
+};
 
-        /**
+/**
  * @param success The callback for success
  * @param error The callback for error
  */
-        Torch.prototype.toggle = function( success, error ) 
-        {
-            return cordova.exec( success, error, "Torch", "toggle", [] );   
-        };
+Torch.prototype.toggle = function( success, error ) 
+{
+    return cordova.exec( success, error, "Torch", "toggle", [] );   
+};
  
 
 /**
@@ -67,6 +67,5 @@ if(!window.plugins) {
 
 if (!window.plugins.Torch) {
     window.plugins.Torch = new Torch();
-    console.log("Initialise Torch");
 }
 

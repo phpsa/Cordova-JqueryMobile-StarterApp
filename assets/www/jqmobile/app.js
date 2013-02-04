@@ -1,7 +1,14 @@
-var theCompass = theCompass || {};
+//jQuery Mobile inititalisation
+$( document ).bind( "mobileinit", function() {
+    // Make your jQuery Mobile framework configuration changes here!
+    $.mobile.allowCrossDomainPages = true;           
+});
 
+var theCompass = theCompass || {};
 theCompass.Compass = (function () {
     var lastHeading = -1,
+    
+    
     // cache the jQuery selectors
     $headText = $("#compassHeader"),
     $compass = $("#compass"),
@@ -25,55 +32,86 @@ theCompass.Compass = (function () {
     $("body").bind("newHeading", updateCompass).bind("newHeading", updateHeadingText);
 }());
 
-//jQuery Mobile inititalisation
-$( document ).bind( "mobileinit", function() {
-    // Make your jQuery Mobile framework configuration changes here!
-    $.mobile.allowCrossDomainPages = true;           
-});
+
+var showMapPage = function() {
+    $.mobile.changePage( $('#map'), {
+        transition: "slide"
+    } );
+}
+            
+var showCompassPage = function () {
+    $.mobile.changePage( $('#CompassPage'), {
+        transition: "slide"
+    } );
+}
+            
+var toggleTorch = function () {
+    window.plugins.Torch.toggle( 
+        function() {
+            console.log('torch toggle success');
+        },
+        function(e) {     
+            console.log('torch toggle error');
+            console.log(e);
+        });   
+}
+            
+var quitApp = function () {
+    navigator.app.exitApp();
+}
 
 //Device Ready Calls
 document.addEventListener("deviceready", function () {
+    console.warn("DeviceReady");
+    initMap();
+
+    var optionsmenu = new OptionsMenu({
+        id: "optionsmenu",
+        items: [ 
+        [ {
+            label: "Map",
+            image: "menu/ic_menu_mapmode.png",
+            action: showMapPage
+        }, 
+        {
+            label: "Torch",
+            image: "menu/ic_menu_torch.png",
+            action: toggleTorch
+        },
+        {
+            label: "Torch",
+            image: "menu/ic_menu_torch.png",
+            action: toggleTorch
+        },
+        {
+            label: "Compass",
+            image: "menu/ic_menu_compass.png",
+            action: showCompassPage
+        }, 
+            
+        {
+            label: "Quit",
+            image: "menu/ic_menu_exit.png",
+            action: quitApp
+        } ],
+        ] 
+    });
+    
     //set your code to only fire once the deviceready has been triggered here !
     theCompass.Compass.watchId = navigator.compass.watchHeading(function (heading) {
-		// only magnetic heading works universally on iOS and Android
-		// round off the heading then trigger newHeading event for any listeners
-		var newHeading = Math.round(heading.magneticHeading);
-		$("body").trigger("newHeading", [newHeading]);
-	}, function (error) {
-		// if we get an error, show its code
-		alert("Compass error: " + error.code);
-	}, {frequency : 100});
+        // only magnetic heading works universally on iOS and Android
+        // round off the heading then trigger newHeading event for any listeners
+        var newHeading = Math.round(heading.magneticHeading);
+        $("body").trigger("newHeading", [newHeading]);
+    }, function (error) {
+        // if we get an error, show its code
+        alert("Compass error: " + error.code);
+    }, {
+        frequency : 100
+    });
 
-    }, false);
+}, false);
 
-//Individial Bits
-/** TORCH START**/
-$('.Torch').on('click', function(e) {
-    window.plugins.Torch.toggle( 
-        function() {
-            //success the torch is toggled
-            $('#Torch').toggleClass("active");
-        },
-        function() {}     
-        //Error Occured the torch is toggled
-        );     
-});
-/** TORCH END**/
-
-/** BARCODE SCANNER START **/
-$('.Barcode').on('click', function(e) {
-    window.plugins.barcodeScanner.scan( function(result) {
-        alert("We got a barcode\n" +
-            "Result: " + result.text + "\n" +
-            "Format: " + result.format + "\n" +
-            "Cancelled: " + result.cancelled);
-    }, function(error) {
-        alert("Scanning failed: " + error);
-    }
-    );
-            
-});
-/** BARCODE SCANNER END **/
 
 /** FACEBOOK AUTH START **/
 var facebook_plugin = {
@@ -116,28 +154,34 @@ var facebook_plugin = {
 
 
 /** GOOGLE MAPS START **/
+var watchID;
+
 function initMap(){
-    
+    console.log("MAP:: InitMap")
     navigator.geolocation.getCurrentPosition(function (position) {
         DrawMap(position.coords.latitude,position.coords.longitude);
     }, function (error) {
+        console.log(error);
         initMap();
     });
 }
 
 function watchMap(){
+    console.log("MAP:: WatchMap")
     var watchID = navigator.geolocation.watchPosition(function(position) { 
         MoveMarker(position.coords.latitude,position.coords.longitude);
-    }, function () {
+    }, function (e) {
+        console.log(e);
+        console.log('rebuild');
         watchMap();
     }, {
-        frequency: 3000
+        frequency: 5000
     });
 }
 
 //Track our longitude and latitude consistantly
 function DrawMap(gLat,gLong) {
-                
+    console.log("MAP:: DrawMap")
     var yourStartLatLng = new google.maps.LatLng( gLat,gLong);
     $('#mapCanvas').gmap({
         'zoom' : 16,
@@ -154,18 +198,9 @@ function DrawMap(gLat,gLong) {
 }
     
 function MoveMarker(gLat,gLong) {
+    console.log("MAP:: MoveMarker")
     var marker = $('#mapCanvas').gmap('get', 'markers').m_1;
     var yourCurrentLatLng = new google.maps.LatLng( gLat,gLong);
     marker.setPosition(yourCurrentLatLng);
                  
 }
-
-           
-//Refresh the map on call to the display page.        
-$( '#map' ).on( 'pageinit',function(event, ui){
-    setTimeout(function () {
-        $('#mapCanvas').gmap('refresh');
-    }, 1500)
-});
-
-/** GOOGLE MAPS END **/

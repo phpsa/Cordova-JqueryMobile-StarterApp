@@ -2,6 +2,7 @@ gApp = new Array();
 
 gApp.deviceready = false;
 gApp.gcmregid = '';
+gApp.deviceId = false;
 
 window.onbeforeunload  =  function(e) {
 
@@ -22,6 +23,8 @@ document.addEventListener('deviceready', function() {
 
 
     gApp.DeviceReady = true;
+    
+    gApp.deviceId = device.uuid;
 
     // Some Unique stuff here,
     // The first Parm is your Google email address that you were authorized to use GCM with
