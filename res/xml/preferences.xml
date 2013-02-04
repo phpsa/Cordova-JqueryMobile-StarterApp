@@ -3,12 +3,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory 
-        android:title="First Category"
+        android:title="Settings"
         android:key="first_category">
         
         <CheckBoxPreference 
             android:key="perform_updates"
-            android:summary="Enable or disable data updates"
+            android:summary="Enable or disable data updates on your position. if disabled you will not be seen or be able to see anyone else."
             android:title="Enable updates" 
             android:defaultValue="true"
         />
@@ -23,19 +23,15 @@
             android:dependency="perform_updates"
         />    
             
-    </PreferenceCategory>
 
-    <PreferenceCategory 
-        android:title="Second Category"
-        android:key="second_category">
-
-        <EditTextPreference
-            android:key="welcome_message"
-            android:title="Welcome Message" 
-            android:summary="Define the Welcome message to be shown"
-            android:dialogTitle="Welcome Message"
-            android:dialogMessage="Provide a message"    
-            android:defaultValue="Default welcome message" />
+        <CheckBoxPreference 
+            android:key="disable_screenout"
+            android:summary="Disable the default screen timeout. this option will increase battery consumption."
+            android:title="Override Screen Timout" 
+            android:defaultValue="true"
+        />
+        
+       
 
     </PreferenceCategory>
     

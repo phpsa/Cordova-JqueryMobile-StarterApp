@@ -7,6 +7,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <link rel="stylesheet" href="jqmobile/jquery.mobile-1.2.0.min.css" />
+        <script type="text/javascript"><!--
+google_ad_client = "ca-pub-2576215688343175";
+/* mobiAds-test */
+google_ad_slot = "1074996668";
+google_ad_width = 320;
+google_ad_height = 50;
+//-->
+</script>
         <style>
             #mapCanvas {
                 margin:0 auto;
@@ -37,12 +45,15 @@
 
             <div data-role="content" style="width:100%;height:100%;position:absolute;padding:0">	
                 <div id="mapCanvas"></div>
+                <script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
             </div><!-- /content -->
 
-          
+
         </div><!-- /page -->
 
-        
+
         <!-- Start of first page -->
         <div data-role="page" id="CompassPage" data-title="Compass" data-theme="a">
 
@@ -54,11 +65,13 @@
             <div data-role="content">
 
                 <img id="compass" class="Center" src="Compass.png" />
-
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
             </div><!-- /content -->
         </div><!-- /page -->
 
-        
+
         <!-- Start of first page -->
         <div data-role="page" id="homepage" data-title="Home" data-theme="a">
 
@@ -88,7 +101,15 @@
             </div><!-- /header -->
 
             <div data-role="content">	
-                settings forms will be here
+                <div id="preferenceTimeoutValue">Not Triggered</div>
+                <br />
+                <button type="button" onclick="power_acquire();">acquire</button>
+                <br />
+                <button type="button" onclick="power_release();">release</button>
+                <br />
+                <button type="button" onclick="power_dim();">dim</button>
+                <br />
+                <button type="button" onclick="power_off();">off</button>
             </div><!-- /content -->
 
         </div><!-- /page -->
@@ -130,11 +151,14 @@
 
 
 
+
         <script>
             var $GLOBALS = {
                 'Facebook_App_id' : '317511395000921',
                 'Facebook_App_permissions' : ["email", "user_about_me"],
-                'GCM_KEY' : '820407658160'
+                'GCM_KEY' : '820407658160',
+                'POWERMANAGER_AQUIRED': false,
+                'APPLICATION_PREFERENCES' : {}
             };
    
         </script>
@@ -160,8 +184,16 @@
         <script type="text/javascript" src="cordova-android/GCMPlugin.js"></script>
         <script type="text/javascript" src="cordova-android/OptionsMenu.js"></script>
         <script type="text/javascript" src="cordova-android/applicationPreferences.js"></script>
-        
+        <script type="text/javascript" src="cordova-android/powermanagement.js"></script>
         <script type="text/javascript" src="jqmobile/app.js"></script>
         <script type="text/javascript" src="cordova-android/CORDOVA_GCM_script.js"></script>
+
+        <script>
+            
+            
+
+         
+        </script>
+
     </body>
 </html>

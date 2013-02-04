@@ -37,10 +37,10 @@ var showMapPage = function() {
     $.mobile.changePage( $('#map'), {
         transition: "slide"
     } );
+    //check if we want to reload the map.!!!
 }
 
 var showPreferences = function () {
-    console.log(window.plugins.applicationPreference);
     window.plugins.applicationPreference.show("org.apache.cordova.hunter.preferences");
 }
             
@@ -65,9 +65,80 @@ var quitApp = function () {
     navigator.app.exitApp();
 }
 
+
+function power_acquire() {
+    window.plugins.powerManagement.acquire(
+        function() {
+        // alert( 'hooray' );/
+        },
+        function() {
+        //  alert( 'oh no!' );
+        }
+        );
+};
+		
+function power_release() {
+    window.plugins.powerManagement.release(
+        function() {
+        //   alert( 'hooray' );
+        },
+        function() {
+        //   alert( 'oh no!' );
+        }
+        );
+}
+		
+function power_dim() {
+    window.plugins.powerManagement.dim(
+        function() {
+        //  alert( 'hooray' );
+        },
+        function() {
+        //   alert( 'oh no!' );
+        }
+        );
+}
+
+var testPowerManagerSetting = function(){
+    console.log("testing Powermanager Settings");
+    window.plugins.applicationPreference.load(function(prefs) {
+        $GLOBALS.APPLICATION_PREFERENCES = prefs;
+        if($GLOBALS.APPLICATION_PREFERENCES.disable_screenout == "true"){
+            if(!$GLOBALS.POWERMANAGER_AQUIRED){
+                $GLOBALS.POWERMANAGER_AQUIRED = true;
+                power_acquire();
+            }
+        }else{
+            if($GLOBALS.POWERMANAGER_AQUIRED){
+                power_release();
+            }
+        }
+    },function(err){
+        console.log(err);
+        });
+        
+        setTimeout(testPowerManagerSetting,5000); //every 5 seconds
+}
+
 //Device Ready Calls
 document.addEventListener("deviceready", function () {
     console.warn("DeviceReady");
+    
+    /*window.plugins.applicationPreference.get("disable_screenout", function(value) {
+       // alert("Value is " + value);
+       if(value == "true"){
+           alert("true is true");
+       }
+       if(value == true){
+           alert("true is boolean");
+       }
+       $GLOBALS.DISABLE_SCREENOUT = value;
+    }, function(error) {
+      //  alert("Error! " + JSON.stringify(error));
+    });*/
+    
+    testPowerManagerSetting();
+    
     initMap();
 
     var optionsmenu = new OptionsMenu({
@@ -89,7 +160,7 @@ document.addEventListener("deviceready", function () {
             image: "menu/ic_menu_compass.png",
             action: showCompassPage
         }, 
-            {
+        {
             label: "Settings",
             image: "menu/ic_menu_settings.png",
             action: showPreferences
@@ -113,6 +184,13 @@ document.addEventListener("deviceready", function () {
         alert("Compass error: " + error.code);
     }, {
         frequency : 100
+    });
+    
+    
+    window.plugins.applicationPreference.get("screenout_interval", function(v) { 
+        $('#"preferenceTimeoutValue').val(v);
+    }, function () {
+        $('#"preferenceTimeoutValue').val('ooops');
     });
 
 }, false);

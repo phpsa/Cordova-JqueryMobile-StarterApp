@@ -56,5 +56,6 @@
     <plugin name="BarcodeScanner" value="com.phonegap.plugins.barcodescanner.BarcodeScanner"/>
     <plugin name="FacebookConnect" value="org.apache.cordova.plugins.FacebookConnect"/>
     <plugin name="GCMPlugin" value="com.plugin.GCM.GCMPlugin" />
+    <plugin name="PowerManagement" value="org.apache.cordova.plugin.PowerManagement"/>
 </plugins>
 </cordova>
