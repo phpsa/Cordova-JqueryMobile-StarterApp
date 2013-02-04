@@ -38,6 +38,11 @@ var showMapPage = function() {
         transition: "slide"
     } );
 }
+
+var showPreferences = function () {
+    console.log(window.plugins.applicationPreference);
+    window.plugins.applicationPreference.show("org.apache.cordova.hunter.preferences");
+}
             
 var showCompassPage = function () {
     $.mobile.changePage( $('#CompassPage'), {
@@ -78,17 +83,17 @@ document.addEventListener("deviceready", function () {
             image: "menu/ic_menu_torch.png",
             action: toggleTorch
         },
-        {
-            label: "Torch",
-            image: "menu/ic_menu_torch.png",
-            action: toggleTorch
-        },
+        
         {
             label: "Compass",
             image: "menu/ic_menu_compass.png",
             action: showCompassPage
         }, 
-            
+            {
+            label: "Settings",
+            image: "menu/ic_menu_settings.png",
+            action: showPreferences
+        },
         {
             label: "Quit",
             image: "menu/ic_menu_exit.png",
